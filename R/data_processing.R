@@ -15,7 +15,13 @@ run_energy_analysis <- function(etat_path,
                                 ct_gaz  = 0.07,
                                 ct_fod  = 0.32,
                                 ct_eau  = 3.5,
-                                ct_reseau = 0.07) {
+                                ct_reseau = 0.07,
+                                coef_elec = 1.5,
+                                coef_gaz = 1.5,
+                                coef_eau = 1.0,
+                                coef_reseau = 1.5,
+                                coef_fod = 1.5,
+                                input_pct = 0.6) {
   
   # Importation des données
   ## fichier Etat énergétique des batiments --- 'La Gaillarde.xlsx'
@@ -84,9 +90,17 @@ run_energy_analysis <- function(etat_path,
   #-------------------------#
   # Feuille 3: Effectifs
   #-------------------------#
+  # Get the sheet names and find the one matching "Effectifs" (case-insensitive, ignoring spaces)
+  sheet_names <- readxl::excel_sheets(occup_path)
+  effectifs_sheet <- sheet_names[grepl("^\\s*Effectifs\\s*$", sheet_names, ignore.case = TRUE)][1]
+
+  if (is.na(effectifs_sheet)) {
+    stop("No sheet matching 'Effectifs' found in the Excel file.")
+  }
+
   myeffectif <- read_excel(
     path = occup_path,
-    sheet = 3,
+    sheet = effectifs_sheet,
     na = c("ND", "NA")
   ) |> 
     as.data.frame()
@@ -227,12 +241,12 @@ run_energy_analysis <- function(etat_path,
     return(c(tp1,tp2))
   }
   
-  prix.elec  <-myprix(coef1=1.5,prix_kwh=ct_edf,input_col=myconso_elec$`derniere_conso`,input_pct=0.6)
-  prix.gaz   <-myprix(coef1=1.5,prix_kwh=ct_gaz,input_col=myconso_gaz$`derniere_conso`,input_pct=0.6)
-  prix.eau   <-myprix(coef1=1,  prix_kwh=ct_eau,input_col=myconso_eau$`derniere_conso`,input_pct=0.6)
-  prix.fod   <-myprix(coef1=1.5,prix_kwh=ct_fod,input_col=myconso_fod$`derniere_conso`,input_pct=0.6)
-  prix.reseau<-myprix(coef1=1.5,prix_kwh=ct_reseau,input_col=myconso_reseau$`derniere_conso`,input_pct=0.6)
-  
+  prix.elec  <- myprix(coef1 = coef_elec, prix_kwh = ct_edf, input_col = myconso_elec$`derniere_conso`, input_pct = input_pct)
+  prix.gaz   <- myprix(coef1 = coef_gaz, prix_kwh = ct_gaz, input_col = myconso_gaz$`derniere_conso`, input_pct = input_pct)
+  prix.eau   <- myprix(coef1 = coef_eau, prix_kwh = ct_eau, input_col = myconso_eau$`derniere_conso`, input_pct = input_pct)
+  prix.fod   <- myprix(coef1 = coef_fod, prix_kwh = ct_fod, input_col = myconso_fod$`derniere_conso`, input_pct = input_pct)
+  prix.reseau <- myprix(coef1 = coef_reseau, prix_kwh = ct_reseau, input_col = myconso_reseau$`derniere_conso`, input_pct = input_pct)
+
   # # prix électricité
   # prix.elec
   # 

@@ -59,31 +59,38 @@ ui <- dashboardPage(
                           accept = ".xlsx", width = "100%"),
                 br(),
                 
-                #   Paramètres de calcul
                 h3("Paramètres de calcul", style = "font-weight:600; margin-top:20px;"),
                 
                 fluidRow(
-                  column(4, numericInput("ct_edf",    "Coût électricité (€/kWh)",   value = 0.09, step = 0.01)),
-                  column(4, numericInput("ct_gaz",    "Coût gaz (€/kWh)",           value = 0.07, step = 0.01)),
-                  column(4, numericInput("ct_fod",    "Coût FOD (€/L)",             value = 0.32, step = 0.01))
+                  column(3, numericInput("ct_edf",   "Coût électricité (€/kWh)", value = 0.09, step = 0.01)),
+                  column(3, numericInput("ct_gaz",   "Coût gaz (€/kWh)",        value = 0.07, step = 0.01)),
+                  column(3, numericInput("ct_eau",   "Coût eau (€/m³)",         value = 3.50, step = 0.01))
                 ),
                 
                 fluidRow(
-                  column(4, numericInput("ct_eau",    "Coût eau (€/m³)",            value = 3.50, step = 0.01)),
-                  column(4, numericInput("ct_reseau", "Coût réseau chaleur (€/kWh)",value = 0.07, step = 0.01))
+                  column(3, numericInput("ct_fod",   "Coût FOD (€/L)",            value = 0.32, step = 0.01)),
+                  column(3, numericInput("ct_reseau",   "Coût réseau chaleur (€/kWh)", value = 0.07, step = 0.01))
                 ),
                 
+                fluidRow(
+                  column(3, numericInput("coef_elec","Coef. électricité",        value = 1.5, step = 0.1)),
+                  column(3, numericInput("coef_gaz", "Coef. gaz",                value = 1.5, step = 0.1)),
+                  column(3, numericInput("coef_eau", "Coef. eau",                value = 1.0, step = 0.1)),
+                ),
+                
+                fluidRow(
+                  column(3, numericInput("coef_reseau", "Coef. réseau",          value = 1.5, step = 0.1)),
+                  column(3, numericInput("coef_fod", "Coef. FOD",                value = 1.5, step = 0.1)),
+                  column(3, numericInput("input_pct", "input_pct",                value = 0.6, step = 0.1))
+                ),
                 br(),
                 
                 fluidRow(
-                  column(6, actionButton("process", "Lancer l'analyse",
-                                         class = "btn-primary btn-lg", width = "100%")),
-                  column(6, downloadButton("download_all", "Télécharger les résultats complets",
-                                           class = "btn-success btn-lg", width = "100%"))
+                  column(6, actionButton("process", "Lancer l'analyse",class = "btn-primary btn-lg", width = "100%")),
+                  column(6, downloadButton("download_all", "Télécharger les résultats complets", class = "btn-success btn-lg", width = "100%"))
                 ),
                 
                 br(),
-                tableOutput("file_table"),
                 uiOutput("error_box")
             )
           )
@@ -183,7 +190,13 @@ server <- function(input, output, session) {
           ct_gaz     = input$ct_gaz,
           ct_fod     = input$ct_fod,
           ct_eau     = input$ct_eau,
-          ct_reseau  = input$ct_reseau
+          ct_reseau  = input$ct_reseau,
+          coef_elec  = input$coef_elec,
+          coef_gaz   = input$coef_gaz,
+          coef_eau   = input$coef_eau,
+          coef_reseau = input$coef_reseau,
+          coef_fod   = input$coef_fod,
+          input_pct  = input$input_pct
         )
       ))
       
