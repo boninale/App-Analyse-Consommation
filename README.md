@@ -64,18 +64,11 @@ Cette standardisation garantit la compatibilité avec des fichiers aux structure
 
 Le script `data_processing.R` :
 
--   importe et nettoie les fichiers,
-
-<!-- -->
-
+-   importe et nettoie les fichiers
 -   applique le filtrage de l’onglet `Occupation` (suppression lorsque `A SUPPRIMER` ≠ "NON"),
-
 -   prépare les données normalisées,
-
 -   calcule les agrégats et indicateurs de consommation,
-
 -   applique les prix unitaires définis dans l’interface,
-
 -   génère les tableaux consolidés et les jeux de données finaux.
 
 Chaque exécution produit un ensemble complet de sorties reproductibles.
@@ -87,9 +80,7 @@ Chaque exécution produit un ensemble complet de sorties reproductibles.
 Les graphiques sont générés via `plot.R` :
 
 -   évolutions interannuelles des consommations,comparaisons entre bâtiments,
-
 -   représentations des variations absolues et en pourcentage,
-
 -   graphiques consolidés pour le tableau de bord Shiny.
 
 Les figures apparaissent dans l’onglet "Tableaux de Bord" de l’application.
