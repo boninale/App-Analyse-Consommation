@@ -1,0 +1,13 @@
+name: Analyse_Consommation_Institut_Agro
+title: Analyse_Consommation_Institut_Agro
+username: boninale
+account: boninale
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 16318319
+bundleId: 11327437
+url: https://boninale.shinyapps.io/Analyse_Consommation_Institut_Agro/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: data/2025-Enquete occupation-MISTEA-20250709.xlsx|data/La Gaillarde.xlsx|data/Synthèse evolutions Consommations 10-02-2025.xlsx|R/test_processing.R|Results

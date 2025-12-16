@@ -26,7 +26,8 @@ script.dir <- "R"
 invisible(source(file.path(script.dir, "data_processing.R"), local = TRUE))
 invisible(source(file.path(script.dir, "plot.R"), local = TRUE))
 
-ui <- dashboardPage(
+ui <- function(){
+  dashboardPage(
     dashboardHeader(title = "Analyse des fluides - La Gaillarde"),
     
     dashboardSidebar(
@@ -152,7 +153,7 @@ ui <- dashboardPage(
       )
     )
 )
-
+}
 # =========================================
 #               Server 
 # =========================================
