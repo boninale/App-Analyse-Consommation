@@ -82,7 +82,7 @@ ui <- function(){
                 fluidRow(
                   column(3, numericInput("coef_reseau", "Coef. réseau",          value = 1.5, step = 0.1)),
                   column(3, numericInput("coef_fod", "Coef. FOD",                value = 1.5, step = 0.1)),
-                  column(3, numericInput("input_pct", "input_pct",                value = 0.6, step = 0.1))
+                  column(3, numericInput("input_pct", "% occupation INRAE",                value = 0.6, step = 0.1))
                 ),
                 br(),
                 
