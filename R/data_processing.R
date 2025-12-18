@@ -39,10 +39,16 @@ run_energy_analysis <- function(etat_path,
   ## Fichier Occupation des batiments par agents INRAE --- "2025-Enquete occupation-MISTEA.xlsx"
 
   # Feuille 2: Occupation
+  sheet_names <- readxl::excel_sheets(occup_path)
+  occup_sheet <- sheet_names[grepl("^\\s*Occupation\\s*$", sheet_names, ignore.case = TRUE)][1]
+
+  if (is.na(occup_sheet)) {
+    stop("No sheet matching 'Occupation' found in the Excel file.")
+  }
 
   myoccup <- read_excel(
     path = occup_path,
-    sheet = 2,
+    sheet = occup_sheet,
     na = c("ND", "NA")
   ) |> 
     as.data.frame()
